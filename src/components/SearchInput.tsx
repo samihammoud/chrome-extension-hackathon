@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import LoopingPlaceholder from "./LoopingPlaceholder";
@@ -31,7 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <div style={{ width: "100%", position: "relative" }}>
+    <div style={{ width: "100%" }}>
       <TextField
         id="search-input"
         multiline
@@ -45,30 +45,19 @@ const SearchInput: React.FC<SearchInputProps> = ({
         disabled={isLoading}
       />
 
-      {/* Animated placeholder overlay - shows when no input and overlay is enabled */}
-      {!val && showOverlay && (
+      {/* Animated placeholder overlay - shows when no input */}
+      {!val && (
         <div
           style={{
             position: "absolute",
             top: "16px",
             left: "16px",
             right: "16px",
-            pointerEvents: "auto",
+            pointerEvents: "none",
             color: "#666",
             fontSize: "16px",
             lineHeight: "1.5",
             zIndex: 1,
-            cursor: "text",
-          }}
-          onClick={() => {
-            // Hide overlay and focus TextField
-            setShowOverlay(false);
-            setTimeout(() => {
-              const textField = document.getElementById("search-input");
-              if (textField) {
-                textField.focus();
-              }
-            }, 0);
           }}
         >
           <LoopingPlaceholder />
