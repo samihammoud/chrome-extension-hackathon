@@ -1,66 +1,172 @@
-# React Chrome Extension Template
+# CanvasAgent Chrome Extension
 
-This is a template for creating a Chrome extension using React and [Vite](https://vitejs.dev/) with TypeScript.
+**for IEEE OC Computer Society AI Dev Hack 2025**
 
+**Team Members:**
+
+- Andrew Bahsoun
+- Sami Hammoud
+- Landon Kauer
+- Max Richter
+
+A Chrome extension that integrates with Canvas LMS and Google Drive to provide AI-powered assistance for educational content.
+
+## Architecture
+
+This project consists of two main parts:
+
+1. **Chrome Extension** (React + TypeScript + Vite)
+2. **Flask Backend API** (Python + Flask)
+
+## Features
+
+- ⚡️ **Vite** for fast development and building
+- ⚛️ **React 18** with TypeScript
+- 🎨 **Material-UI** for beautiful components
+- 🔧 **ESLint** for code quality
+- 📦 **Chrome Extension Manifest V3** ready
+- 🚀 **Hot reload** during development
+- 🔐 **Canvas OAuth2** integration
+- 📚 **Google Drive** API integration
+- 🤖 **AI-powered** content processing
 
 ## Getting Started
 
 ### Prerequisites
 
-Make sure you have [Node.js](https://nodejs.org/) (version 18+ or 20+) installed on your machine.
+- Node.js 18+
+- Python 3.9+
+- npm or yarn
 
-### Setup
+### Installation
 
-1. Clone or fork the repository :
+1. Clone this repository
+2. Install frontend dependencies:
 
-    ```sh
-    # To clone
-    git clone https://github.com/5tigerjelly/chrome-extension-react-template
-    cd chrome-extension-react-template
-    ```
+   ```bash
+   npm install
+   ```
 
-2. Install the dependencies:
+3. Set up backend environment:
 
-    ```sh
-    npm install
-    ```
+   ```bash
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
 
-## 🏗️ Development
+4. Configure environment variables:
+   ```bash
+   cp backend/.env.example backend/.env
+   # Edit backend/.env with your Canvas and API credentials
+   ```
 
-To start the development server:
+### Development
 
-```sh
-npm run dev
-```
+1. Start the Flask backend:
 
-This will start the Vite development server and open your default browser.
+   ```bash
+   cd backend
+   source venv/bin/activate
+   python app.py
+   ```
 
-## 📦 Build 
+   The API will be available at `http://localhost:5001`
 
-To create a production build:
+2. Start the frontend development server:
 
-```sh
+   ```bash
+   npm run dev
+   ```
+
+3. Load the extension in Chrome:
+   - Open Chrome and go to `chrome://extensions/`
+   - Enable "Developer mode"
+   - Click "Load unpacked" and select the `build` folder
+
+### Building
+
+Build the extension for production:
+
+```bash
 npm run build
 ```
 
-This will generate the build files in the `build` directory.
+The built extension will be in the `build` folder.
 
-## 📂 Load Extension in Chrome
+## Project Structure
 
-1. Open Chrome and navigate to `chrome://extensions/`.
-2. Enable "Developer mode" using the toggle switch in the top right corner.
-3. Click "Load unpacked" and select the `build` directory.
+```
+├── src/                    # Chrome Extension Frontend
+│   ├── components/         # React components
+│   ├── hooks/             # Custom React hooks
+│   ├── services/          # API services
+│   ├── background.ts      # Service worker
+│   ├── App.tsx           # Main app component
+│   └── main.tsx          # Entry point
+├── backend/               # Flask API Backend
+│   ├── app.py            # Main Flask application
+│   ├── requirements.txt  # Python dependencies
+│   ├── .env.example      # Environment variables template
+│   └── venv/             # Python virtual environment
+├── public/
+│   ├── manifest.json     # Chrome extension manifest
+│   └── vite.svg         # Extension icon
+└── README.md
+```
 
-Your React app should now be loaded as a Chrome extension!
+## API Endpoints
 
-## 🗂️ Project Structure
+The Flask backend provides these endpoints:
 
-- `public/`: Contains static files and the `manifest.json`.
-- `src/`: Contains the React app source code.
-- `vite.config.ts`: Vite configuration file.
-- `tsconfig.json`: TypeScript configuration file.
-- `package.json`: Contains the project dependencies and scripts.
+- `GET /api/health` - Health check
+- `POST /api/test` - Simple test (no auth required)
+- `POST /api/ask-test` - Test with simulated tokens
+- `POST /api/ask` - **Main endpoint** (requires tokens in request body)
+- `GET /auth/canvas/start` - Start Canvas OAuth flow
+- `GET /auth/canvas/callback` - Canvas OAuth callback
+
+## Request Format
+
+```json
+{
+  "question": "What are my assignments?",
+  "context": { "course": "CS101" },
+  "canvas_tokens": {
+    "access_token": "canvas_token_123",
+    "refresh_token": "canvas_refresh_123",
+    "expires_in": 3600
+  },
+  "google_tokens": {
+    "access_token": "google_token_456",
+    "refresh_token": "google_refresh_456",
+    "expires_in": 3600
+  }
+}
+```
+
+## Environment Variables
+
+Configure these in `backend/.env`:
+
+- `ALLOWED_EXTENSION_ORIGIN`: set to your extension's origin in prod
+- `CANVAS_*`: your Canvas developer key + base URL + redirect URI
+- `BACKEND_URL` and `BACKEND_AUTH`: where to forward the question and tokens
+
+## Security Notes
+
+- Tokens are never stored on the server (frontend manages them)
+- Use HTTPS in production
+- Lock CORS to your exact extension origin in production
+
+## Development Tips
+
+- The extension will automatically reload when you make changes
+- Use the Chrome DevTools to debug your extension
+- Check the `manifest.json` for permissions and configuration
+- The Flask backend handles OAuth flows and token management
 
 ## License
 
-This project is licensed under the MIT License.
+MIT

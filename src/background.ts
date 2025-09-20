@@ -98,6 +98,7 @@ chrome.action.onClicked.addListener((tab) => {
   console.log('Extension icon clicked', tab);
 });
 
+
 console.log("Background script fully loaded!");
 
 

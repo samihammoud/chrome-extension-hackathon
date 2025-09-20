@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import LoopingPlaceholder from "./LoopingPlaceholder";
 
 interface SearchInputProps {
   val: string;
@@ -15,8 +16,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
   onChange,
   onSubmit,
   isLoading = false,
-  placeholder = "Create a template for my next lecture",
 }) => {
+  const [showOverlay, setShowOverlay] = useState(true);
   const handleSubmit = () => {
     if (val.trim()) {
       onSubmit();
@@ -30,12 +31,12 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", position: "relative" }}>
       <TextField
         id="search-input"
         multiline
         rows={4}
-        placeholder={placeholder}
+        placeholder=""
         value={val}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyPress}
@@ -43,6 +44,36 @@ const SearchInput: React.FC<SearchInputProps> = ({
         variant="outlined"
         disabled={isLoading}
       />
+
+      {/* Animated placeholder overlay - shows when no input and overlay is enabled */}
+      {!val && showOverlay && (
+        <div
+          style={{
+            position: "absolute",
+            top: "16px",
+            left: "16px",
+            right: "16px",
+            pointerEvents: "auto",
+            color: "#666",
+            fontSize: "16px",
+            lineHeight: "1.5",
+            zIndex: 1,
+            cursor: "text",
+          }}
+          onClick={() => {
+            // Hide overlay and focus TextField
+            setShowOverlay(false);
+            setTimeout(() => {
+              const textField = document.getElementById("search-input");
+              if (textField) {
+                textField.focus();
+              }
+            }, 0);
+          }}
+        >
+          <LoopingPlaceholder />
+        </div>
+      )}
 
       <Button
         variant="contained"
