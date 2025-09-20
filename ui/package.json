@@ -18,8 +18,10 @@
     "@fontsource/playfair-display": "^5.2.8",
     "@fontsource/roboto-mono": "^5.2.8",
     "@mui/material": "^7.3.2",
+    "bootstrap": "^5.3.8",
     "framer-motion": "^12.23.16",
     "react": "^19.1.1",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",
     "react-typed": "^2.0.12"
   },

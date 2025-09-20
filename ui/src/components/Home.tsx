@@ -56,24 +56,13 @@ const Home: React.FC<HomeProps> = ({ token }) => {
   return (
     <div style={{ width: "400px", padding: "20px" }}>
       <motion.h1 {...textAnimations.elegant}>Personal-Wizard</motion.h1>
-      <div className="card">
+      <div>
         <SearchInput
           val={searchText}
           onChange={setSearchText}
           onSubmit={handleSubmit}
           isLoading={isLoading}
         />
-
-        {/* {result && (
-          <div
-            style={{
-              marginTop: "15px",
-              padding: "10px",
-
-              borderRadius: "4px",
-            }}
-          ></div>
-        )} */}
       </div>
     </div>
   );

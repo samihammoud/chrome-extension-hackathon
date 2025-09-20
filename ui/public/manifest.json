@@ -26,7 +26,8 @@
     ],
     "host_permissions": [
       "https://accounts.google.com/*",
-      "https://www.googleapis.com/*"
+      "https://www.googleapis.com/*",
+      "http://localhost:5001/*"
     ]
   }
 
