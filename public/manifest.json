@@ -9,5 +9,24 @@
     "background": {
       "service_worker": "background.js"
     },
-    "permissions": []
+    
+    "oauth2": {
+      "client_id": "292251253039-n1ahijsmm8ncrqfcbhncs5q78q1dtvci.apps.googleusercontent.com",
+
+      
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile"
+      ]
+    },
+    "permissions": [
+      "identity",
+      "storage"
+    ],
+    "host_permissions": [
+      "https://accounts.google.com/*",
+      "https://www.googleapis.com/*"
+    ]
   }
+

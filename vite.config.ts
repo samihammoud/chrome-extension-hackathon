@@ -16,6 +16,7 @@ export default defineConfig({
   ],
   build: {
     outDir: 'build',
+    minify: false,
     rollupOptions: {
       input: {
         main: './index.html',
