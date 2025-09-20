@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import SearchInput from "./SearchInput";
+import { motion } from "framer-motion";
+import { textAnimations } from "../styles/textStyles";
 
 interface HomeProps {
   token: string | null;
@@ -53,17 +55,14 @@ const Home: React.FC<HomeProps> = ({ token }) => {
 
   return (
     <div style={{ width: "400px", padding: "20px" }}>
-      <h1>Welcome!</h1>
+      <motion.h1 {...textAnimations.elegant}>Personal-Wizard</motion.h1>
       <div className="card">
-        <h2>Home</h2>
         <SearchInput
           val={searchText}
           onChange={setSearchText}
           onSubmit={handleSubmit}
           isLoading={isLoading}
         />
-
-        <p>Token: {token?.substring(0, 20)}...</p>
 
         {/* {result && (
           <div

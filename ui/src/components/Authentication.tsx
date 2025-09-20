@@ -1,4 +1,5 @@
 import React from "react";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 interface AuthenticationProps {
   authStatus: string;
@@ -17,20 +18,12 @@ const Authentication: React.FC<AuthenticationProps> = ({
       <div className="card">
         <h2>Authentication</h2>
         <p>Status: {authStatus}</p>
-        <button
+        <GoogleSignInButton
           onClick={onLogin}
-          disabled={isLoading}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: isLoading ? "#ccc" : "#646cff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: isLoading ? "not-allowed" : "pointer",
-          }}
-        >
-          {isLoading ? "Authenticating..." : "Login with Google"}
-        </button>
+          isLoading={isLoading}
+          size="medium"
+          color="light"
+        />
       </div>
     </div>
   );
