@@ -17,7 +17,6 @@ const SearchInput: React.FC<SearchInputProps> = ({
   onSubmit,
   isLoading = false,
 }) => {
-  const [showOverlay, setShowOverlay] = useState(true);
   const handleSubmit = () => {
     if (val.trim()) {
       onSubmit();
@@ -31,7 +30,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", position: "relative" }}>
       <TextField
         id="search-input"
         multiline
@@ -53,11 +52,19 @@ const SearchInput: React.FC<SearchInputProps> = ({
             top: "16px",
             left: "16px",
             right: "16px",
-            pointerEvents: "none",
+            pointerEvents: "auto",
             color: "#666",
             fontSize: "16px",
             lineHeight: "1.5",
             zIndex: 1,
+            cursor: "text",
+          }}
+          onClick={() => {
+            // Focus the TextField when overlay is clicked
+            const textField = document.getElementById("search-input");
+            if (textField) {
+              textField.focus();
+            }
           }}
         >
           <LoopingPlaceholder />
