@@ -51,7 +51,7 @@ def ask():
             "status": "success",
             "message": "Test mode - simulating backend response",
             "user_question": question,
-            "user_context": context,
+            "user_context": context.get("course", ""),
             "tokens": {
                 "canvas": {
                     "available": bool(canvas_tokens.get("access_token")),

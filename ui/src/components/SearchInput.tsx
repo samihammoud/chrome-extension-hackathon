@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import LoopingPlaceholder from "./LoopingPlaceholder";
 
 interface SearchInputProps {
   val: string;
   onChange: (value: string) => void;
-  onSubmit: () => void;
+  onKeyPress?: (e: React.KeyboardEvent) => void;
   isLoading?: boolean;
   placeholder?: string;
 }
@@ -14,21 +13,10 @@ interface SearchInputProps {
 const SearchInput: React.FC<SearchInputProps> = ({
   val,
   onChange,
-  onSubmit,
+  onKeyPress,
   isLoading = false,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const handleSubmit = () => {
-    if (val.trim()) {
-      onSubmit();
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-      handleSubmit();
-    }
-  };
 
   return (
     <div
@@ -46,7 +34,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         placeholder=""
         value={val}
         onChange={(e) => onChange(e.target.value)}
-        onKeyDown={handleKeyPress}
+        onKeyDown={onKeyPress}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         style={{ width: "100%" }}
@@ -82,20 +70,6 @@ const SearchInput: React.FC<SearchInputProps> = ({
           <LoopingPlaceholder />
         </div>
       )}
-
-      <Button
-        variant="contained"
-        onClick={handleSubmit}
-        disabled={!val.trim() || isLoading}
-        style={{
-          marginTop: "10px",
-          backgroundColor: "#646cff",
-          color: "white",
-          alignSelf: "flex-start",
-        }}
-      >
-        {isLoading ? "Sending..." : "Send To Wizard"}
-      </Button>
     </div>
   );
 };
